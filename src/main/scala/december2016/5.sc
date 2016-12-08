@@ -34,7 +34,7 @@ val hashes = List(
 */
 
 // Part 2
-val hashList = (23000000 to 33000000).toList.foldLeft(Map[Int, Char]()){
+val hashList = (0 to 33000000).toList.foldLeft(Map[Int, Char]()){
   (acc, nb) => {
     val hash = md5(input + nb.toString)
     if(isGoodHash(hash)) {
@@ -48,3 +48,5 @@ val hashList = (23000000 to 33000000).toList.foldLeft(Map[Int, Char]()){
     } else acc
   }
 }
+
+println(hashList.toString())
