@@ -1,7 +1,7 @@
 import scala.io.Source
 
 
-val stream : String = getClass.getResource("/day4input.txt").getPath
+val stream : String = getClass.getResource("/input.txt").getPath
 val rooms = Source.fromFile( stream ).getLines.toList.map(x=>{
   x.split('[').toList
 }).map(y=>{
@@ -53,9 +53,12 @@ def verifyRoom(tuple: (Int, String, String, String)): Boolean = {
 val realRooms = mergeChars.filter(verifyRoom)
 
 // Part 1
+println("============")
+realRooms.length
 realRooms.foldLeft(0){
   (acc, t) =>acc + t._1
 }
+println("============")
 
 
 

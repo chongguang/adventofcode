@@ -1,13 +1,8 @@
 import scala.io.Source
 
-val stream : String = getClass.getResource("/day12input.txt").getPath
-val instructionList = Source.fromFile( stream ).getLines.toList.map(s => Parser(s))
 
 
-val initMap: Map[String, Int] = Map("a"->0, "b"->0, "c"->1, "d"->0)
-val initState: State = new State(initMap, instructionList, 0)
-val finalState = apply(initState)
-finalState.Registers.toString()
+
 
 def apply(state: State): State = {
   if (state.isFinished) state
@@ -26,7 +21,6 @@ class State(rs: Map[String, Int], ins: List[State => State], ip: Int){
 }
 
 
-case class St (rs:Map[String, Int])
 
 def Parser(str: String): State => State = {
   val list = str.split(" ")
@@ -87,3 +81,13 @@ jnz d -2
 dec c
 jnz c -5
  */
+
+
+
+val stream : String = getClass.getResource("/day12input.txt").getPath
+val instructionList = Source.fromFile( stream ).getLines.toList.map(s => Parser(s))
+
+val initMap: Map[String, Int] = Map("a"->0, "b"->0, "c"->1, "d"->0)
+val initState: State = new State(initMap, instructionList, 0)
+val finalState = apply(initState)
+finalState.Registers.toString()
