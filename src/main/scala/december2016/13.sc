@@ -21,23 +21,18 @@ def canMoveRight(s: State): Boolean = isOpenSpace(s.X + 1, s.Y ) && !s.History.c
 })
 */
 
-class State(x: Int, y:Int, history: List[(Int, Int)]){
-  val X: Int = x
-  val Y: Int = y
-  val History = history
+case class State(X: Int, Y:Int, History: List[(Int, Int)])
+
+
+def apply(s: State):Unit = s match {
+  case State(31, 39, history) if history.length <84 => println(s.History.length)
+  case State(x, y ,history) if canMoveUp(s) => apply(State(x, y-1, history:+(x,y)))
+  case State(x, y ,history) if canMoveDown(s) => apply(State(x, y+1, history:+(x,y)))
+  case State(x, y ,history) if canMoveLeft(s) => apply(State(x-1, y, history:+(x,y)))
+  case State(x, y ,history) if canMoveRight(s) => apply(State(x+1, y, history:+(x,y)))
+  case _ => println("oups")
 }
 
 
-def apply(s: State):Unit = {
-  if (s.X == 31 && s.Y == 39) {
-    if(s.History.length < 84)
-    println(s.History.length)
-  } else {
-    if(canMoveUp(s)) apply(new State(s.X, s.Y-1, s.History:+(s.X, s.Y)))
-    if(canMoveDown(s)) apply(new State(s.X, s.Y+1, s.History:+(s.X, s.Y)))
-    if(canMoveLeft(s)) apply(new State(s.X-1, s.Y, s.History:+(s.X, s.Y)))
-    if(canMoveRight(s)) apply(new State(s.X+1, s.Y, s.History:+(s.X, s.Y)))
-  }
-}
 
-apply(new State(1,1,List[(Int, Int)]()))
+apply(State(1,1,List[(Int, Int)]()))
