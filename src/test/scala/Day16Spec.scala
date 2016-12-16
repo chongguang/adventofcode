@@ -6,6 +6,7 @@ import org.scalatest._
 import december2016.Day16._
 
 class Day10Spec extends FlatSpec with Matchers {
+
   "generateData: 1" should "become 100" in {
     generateData(List(1),3) === List(1,0,0)
   }
