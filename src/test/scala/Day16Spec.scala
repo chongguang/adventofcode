@@ -34,8 +34,9 @@ class Day10Spec extends FlatSpec with Matchers {
   "calcule: with initial 00111101111101000 and size 272" should "become 01100" in {
     calcule("00111101111101000", 272) === "10011010010010010"
   }
-
+/*
   "calcule: with initial 00111101111101000 and size 35651584" should "become 01100" in {
     calcule("00111101111101000", 35651584) === "10101011110100011"
   }
+  */
 }
