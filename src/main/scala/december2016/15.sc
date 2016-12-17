@@ -12,8 +12,6 @@ def disk3(time: Int) = diskPosition(time, 2, 19)
 def disk4(time: Int) = diskPosition(time, 0, 5)
 def disk5(time: Int) = diskPosition(time, 0, 3)
 def disk6(time: Int) = diskPosition(time, 5, 13)
-
-
 def disk7(time: Int) = diskPosition(time, 0, 11)
 
 def findFirst(t: Int): Int = {
