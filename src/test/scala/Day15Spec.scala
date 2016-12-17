@@ -19,7 +19,7 @@ class Day15Spec extends FlatSpec with Matchers {
 
     disk3(0) shouldBe 2
     disk3(1) shouldBe 3
-    disk3(16) shouldBe 0
+    disk3(17) shouldBe 0
 
     disk4(0) shouldBe 0
     disk4(1) shouldBe 1
