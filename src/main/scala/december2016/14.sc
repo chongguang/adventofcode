@@ -34,7 +34,6 @@ class State(keys: List[Int], currentValue: Int, tripleMap: Map[String, List[Int]
 }
 
 def decodeIndice(i: Int): (List[String], List[String]) = {
-  //val hash = md5(input + i.toString)
   val hash = stretchedHash(input + i.toString)
   val firstTriple = findFirstTriple(hash)
   val fiveOfAKind = findRepetitions(hash, 5)
@@ -85,7 +84,7 @@ def findIndexOf64thKey(state: State):State = {
         val char = decodeCurrent._1.head.charAt(0)
         val s = List.fill(5)(char).mkString
         val l = newFiveOfAKindMap.getOrElse(s, List[Int]())
-        l.filter(i=> i>state.CurrentValue && i<=newIndice).length match {
+        l.count(i => i > state.CurrentValue && i <= newIndice) match {
           case 0 => findIndexOf64thKey(new State(state.Keys, state.CurrentValue+1, newTripleMap, newFiveOfAKindMap))
           case _ => findIndexOf64thKey(new State( state.CurrentValue :: state.Keys, state.CurrentValue+1, newTripleMap, newFiveOfAKindMap))
         }

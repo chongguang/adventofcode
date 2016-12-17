@@ -1,6 +1,7 @@
 package december2016
 
 import java.security.MessageDigest
+import scala.util.Random
 
 /**
   * Created by Chongguang on 2016/12/17.
@@ -24,14 +25,14 @@ object Day17 {
   case class Step(x: Int, y:Int, path: String)
 
   def possibleMove(s: Step, code: String): List[Step] = {
-    val doorsSate = md5(code + s.path).take(4).toList.map(isOpen)
+    val doorsState = md5(code + s.path).take(4).toList.map(isOpen)
     val nextSteps = List(
       Step(s.x, s.y-1, s.path :+ 'U'),
       Step(s.x, s.y+1, s.path :+ 'D'),
       Step(s.x-1, s.y, s.path :+ 'L'),
       Step(s.x+1, s.y, s.path :+ 'R')
     )
-    (nextSteps zip doorsSate).filter(p=>
+    (nextSteps zip doorsState).filter(p=>
       p._1.x >=0 &&
         p._1.x <=3 &&
         p._1.y >=0 &&
@@ -41,42 +42,56 @@ object Day17 {
   }
 
 
-  def longestPath(current: Step, code: String): Int = {
-    if(current.x == 3 && current.y == 3) {
-      current.path.length
-    }
+  val stepMaxPath = Step(0,0,Random.alphanumeric.take(100).mkString)
+  val stepMinPath = Step(0,0,"")
+
+
+  def longestPath(current: Step, code: String): Step = {
+    if(current.x == 3 && current.y == 3) current
     else {
       val moves = possibleMove(current, code)
-      if(moves.isEmpty) Int.MinValue
+      if(moves.isEmpty) stepMinPath
       else {
         val paths = for (m <- moves ) yield {
           longestPath(m, code)
         }
-        paths.max
+        paths.maxBy(_.path.length)
       }
     }
   }
 
-  def shortestPath(current: Step, code: String): Int = {
-    if(current.x == 3 && current.y == 3) {
-      //println(current.path)
-      current.path.length
-    }
+  def shortestPath(current: Step, code: String): Step = {
+    if(current.x == 3 && current.y == 3) current
     else {
       val moves = possibleMove(current, code)
-      if(moves.isEmpty) Int.MaxValue
+      if(moves.isEmpty) stepMaxPath
       else {
         val paths = for (m <- moves ) yield {
           shortestPath(m, code)
         }
-        paths.min
+        paths.minBy(_.path.length)
       }
     }
   }
 
+  def path(current: Step, code: String, isShortest: Boolean): Step = {
+    if(current.x == 3 && current.y == 3) current
+    else {
+      val moves = possibleMove(current, code)
+      if(moves.isEmpty) if (isShortest) stepMaxPath else stepMinPath
+      else {
+        val paths = for (m <- moves ) yield {
+          path(m, code, isShortest)
+        }
+        if (isShortest) paths.minBy(_.path.length) else paths.maxBy(_.path.length)
+      }
+    }
+  }
 
   def main(args: Array[String]): Unit = {
-    val sp = shortestPath(Step(0,0,""), passcode)
-    val lp = longestPath(Step(0,0,""), passcode)
+    val sp = path(Step(0,0,""), passcode, true)
+    println(sp.path)
+    val lp = path(Step(0,0,""), passcode, false)
+    print(lp.path.length)
   }
 }

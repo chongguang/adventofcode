@@ -34,11 +34,11 @@ class Day17Spec extends FlatSpec with Matchers {
   }
 
   "shortest path" should "work :)" in {
-    shortestPath(Step(0,0,""), passcode) shouldBe 10
+    path(Step(0,0,""), passcode, true).path shouldBe "RDULRDDRRD"
   }
 
   "longest path" should "work :)" in {
-    longestPath(Step(0,0,""), passcode) shouldBe 752
+    path(Step(0,0,""), passcode, false).path.length shouldBe 752
   }
 
 
