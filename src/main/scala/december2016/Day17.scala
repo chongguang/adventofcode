@@ -59,7 +59,7 @@ object Day17 {
 
   def shortestPath(current: Step, code: String): Int = {
     if(current.x == 3 && current.y == 3) {
-      println(current.path)
+      //println(current.path)
       current.path.length
     }
     else {
