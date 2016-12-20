@@ -1,3 +1,5 @@
+import scala.util.Random
+
 def removeElementAtEven(l :List[Int]): List[Int] = l.zipWithIndex.filter(p=>p._2%2==0).map{p=>p._1}
 
 
@@ -51,4 +53,16 @@ def Question2(list: List[Int], position: Int): Int = {
   }
 }
 
-Question2((1 to 6).toList,0)
+//Question2((1 to 6).toList,0)
+
+
+private def addGaussianNoise(lat: Double, lon: Double, seed: Option[Long] = None): (Double, Double) = {
+  val rand = seed match {
+    case Some(s) => new Random(s)
+    case _ => Random
+  }
+  val sigma =  0.0006456
+  (lat + sigma * rand.nextGaussian(), lon + sigma * rand.nextGaussian())
+}
+
+addGaussianNoise(27.766106,-15.574492)
